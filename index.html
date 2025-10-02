@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio-Baim</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Gaya kustom untuk tekstur gradient */
+      .text-gradient {
+        background-image: linear-gradient(
+          to right,
+          #ff00d4,
+          #ff3c00
+        ); /* Gradient warna */
+        -webkit-background-clip: text; /* Memotong background agar hanya berlaku pada teks */
+        background-clip: text; /* Agar background hanya muncul di teks */
+        color: transparent; /* Membuat teks transparan agar gradien terlihat */
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: poppins, Arial, Helvetica, sans-serif;
+      }
+
+      .hamburger-active > span:nth-child(1) {
+        transform: translateX(-10px);
+      }
+      .hamburger-active > span:nth-child(2) {
+        transform: translateX(10px);
+      }
+      .hamburger-active > span:nth-child(3) {
+        transform: translateX(-10px);
+      }
+      /* Animasi aktif di mobile */
+      #menu {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform-origin: top right;
+      }
+
+      /* Saat tersembunyi */
+      .navbar-inactive {
+        transform: scale(0.1);
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+      }
+
+      /* Saat aktif (muncul) */
+      .navbar-active {
+        transform: scale(1);
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+      }
+      @media (min-width: 768px) {
+        #menu {
+          transform: none !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+        }
+
+        .navbar-inactive,
+        .navbar-active {
+          transform: none !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+        }
+      }
+
+      .header-fixed {
+        position: fixed;
+        backdrop-filter: blur(5px);
+        border-image: linear-gradient(to right, #ff00d4, #ff3c00) 1;
+        border-bottom: solid 1px oklch(75% 0.183 55.934);
+      }
+
+      #span span {
+        background-color: black;
+        padding: 10px;
+        width: 100%;
+        height: 100%;
+        display: block;
+        box-shadow: 5px 5px 20px black;
+        pointer-events: none;
+        aspect-ratio: 1/1;
+      }
+
+      .animasi {
+        background: linear-gradient(#000, oklch(75% 0.183 55.934), #000);
+        animation: down 5s linear infinite;
+      }
+
+      @keyframes down {
+        0% {
+          transform: translateY(-100%);
+        }
+        100% {
+          transform: translateY(100%);
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="h-full bg-gradient-to-b from-slate-950 via-slate-800 to-slate-950"
+  >
+    <!-- Navbar section start -->
+    <header
+      id="header"
+      class="w-full absolute top-0 left-0 bg-transparent items-center z-10"
+    >
+      <div class="py-2 px-4 flex justify-between">
+        <h2 class="font-bold text-2xl text-white">Logo</h2>
+        <div id="nav" class="relative w-1/2 hidden">
+          <div
+            id="hamburger"
+            class="w-10 h-10 absolute right-0 cursor-pointer md:hidden"
+          >
+            <span
+              class="block w-8 h-[3px] my-2 bg-white transition duration-300 ease-in-out"
+            ></span>
+            <span
+              class="block w-8 h-[3px] my-2 bg-white transition duration-300 ease-in-out"
+            ></span>
+            <span
+              class="block w-8 h-[3px] my-2 bg-white transition duration-300 ease-in-out"
+            ></span>
+          </div>
+          <div
+            id="menu"
+            class="navbar-inactive md:block md:scale-100 bg-orange-400 absolute top-10 -right-4 w-full rounded-lg rounded-r-none p-2 md:top-0 md:bg-transparent transition-all duration-300 ease-in-out origin-top-right"
+          >
+            <ul
+              class="flex flex-col text-sm font-semibold leading-loose text-white md:flex-row md:justify-evenly lg:text-sm gap-2 md:gap-5 md:h-full"
+            >
+              <li class="group inline-block text-left">
+                <a href="#home" class="block">Home</a>
+                <div
+                  class="w-2 h-[1px] bg-white group-hover:w-9 group-hover:h-[2px] transition-all duration-300 ease-in-out block rounded-full md:mx-auto"
+                ></div>
+              </li>
+              <li class="group inline-block text-left">
+                <a href="#services" class="block">Services</a>
+                <div
+                  class="w-2 h-[1px] bg-white group-hover:w-14 group-hover:h-[2px] transition-all duration-300 ease-in-out block rounded-full md:mx-auto"
+                ></div>
+              </li>
+              <li class="group inline-block text-left">
+                <a href="#about" class="block">About me</a>
+                <div
+                  class="w-2 h-[1px] bg-white group-hover:w-15 group-hover:h-[2px] transition-all duration-300 ease-in-out block rounded-full md:mx-auto"
+                ></div>
+              </li>
+              <li class="group inline-block text-left">
+                <a href="#project" class="block">Project</a>
+                <div
+                  class="w-2 h-[1px] bg-white group-hover:w-12 group-hover:h-[2px] transition-all duration-300 ease-in-out block rounded-full md:mx-auto"
+                ></div>
+              </li>
+              <li class="group inline-block text-left">
+                <a href="#contact" class="block">Contact</a>
+                <div
+                  class="w-2 h-[1px] bg-white group-hover:w-13 group-hover:h-[2px] transition-all duration-300 ease-in-out block rounded-full md:mx-auto"
+                ></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Navbar section end -->
+
+    <!-- amnimasi section start -->
+    <section>
+      <div class="fixed top-0 left-0 -z-2">
+        <div
+          class="block w-full h-screen bg-black fixed top-0 left-0 -z-2"
+        ></div>
+        <div
+          id="span"
+          class="w-[1000px] lg:w-[2000px] h-screen absolute top-0 left-0 bg-transparent grid grid-cols-20 auto-rows-auto gap-2"
+        >
+          <span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span
+          ><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="animasi fixed w-full h-screen top-0 left-0 -z-2"></div>
+      </div>
+    </section>
+    <!-- amnimasi section end -->
+
+    <!-- hero section start -->
+    <section
+      class="w-full px-10 mt-15 flex justify-between items-center md:h-screen scroll-mt-20"
+      id="home"
+    >
+      <div class="flex flex-wrap items-center mr-10 lg:gap-3">
+        <h1
+          class="w-full text-2xl font-bold text-white mb-3 md:text-3xl lg:text-4xl"
+        >
+          Hi, I'm <span class="text-gradient">Baim</span>
+        </h1>
+        <p
+          class="w-full text-slate-600 text-xs lg:text-sm font-semibold mb-3 hidden md:inline-block w-1/2 md:leading-relaxed"
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+          tempora, quae optio quis voluptatem reiciendis ipsam temporibus eaque
+          tempore. In eum consequuntur asperiores voluptates at?
+        </p>
+        <div class="w-full">
+          <button
+            class="bg-orange-400 text-white p-2 text-sm font-bold rounded-full cursor-pointer mb-16"
+          >
+            Get in Touch
+          </button>
+        </div>
+      </div>
+      <div class="flex justify-center items-center min-w-1/2">
+        <div
+          class="bg-orange-400 min-w-64 min-h-64 bg-cover bg-bottom rounded-full border border-solid border-orange-400 shadow-2xl shadow-orange-400/40 overflow-hidden"
+        >
+          <div
+            class="bg-[url('img/baim.png')] w-64 h-64 bg-center bg-cover scale-125"
+          ></div>
+        </div>
+      </div>
+    </section>
+    <!-- hero section end -->
+
+    <!-- service section start -->
+    <section>
+      <div id="services" class="w-full px-4 mt-10 scroll-mt-20">
+        <h2 class="text-white text-lg font-bold mb-5">My Services</h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6"
+        >
+          <div
+            class="bg-blue-950 p-5 box-border rounded-lg flex flex-wrap justify-center items-center gap-3 shadow-lg shadow-orange-400/50 group"
+          >
+            <div class="w-full flex justify-center items-center">
+              <svg
+                role="img"
+                viewBox="0 0 24 24"
+                class="w-1/3 opacity-60 group-hover:scale-110 group-hover:opacity-100 group-hover:drop-shadow-[0_4px_10px_rgba(255,167,38,0.2)] origin-center transition duration-500 ease-in-out"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>GNOME Terminal</title>
+                <path
+                  d="M1.846 0A1.841 1.841 0 000 1.846v18.463c0 1.022.823 1.845 1.846 1.845h20.308A1.841 1.841 0 0024 20.31V1.846A1.841 1.841 0 0022.154 0H1.846zm0 .924h20.308c.512 0 .922.41.922.922v18.463c0 .511-.41.921-.922.921H1.846a.919.919 0 01-.922-.921V1.846c0-.512.41-.922.922-.922zm0 .922v18.463h20.308V1.846H1.846zm1.845 2.14l3.235 1.758v.836L3.69 8.477V7.385l2.243-1.207v-.033L3.69 5.076v-1.09zM7.846 9.23h3.693v.924H7.846V9.23zM0 21.736v.418C0 23.177.823 24 1.846 24h20.308A1.841 1.841 0 0024 22.154v-.418a2.334 2.334 0 01-1.846.918H1.846A2.334 2.334 0 010 21.736Z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-orange-400 font-bold">Web Design</h3>
+            <p class="text-slate-600 text-center md:text-sm lg:text-xs">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam
+              iure modi voluptate necessitatibus, vitae quod a optio.
+            </p>
+          </div>
+          <div
+            class="bg-blue-950 p-5 box-border rounded-lg flex flex-wrap justify-center items-center gap-3 shadow-lg shadow-orange-400/50 group"
+          >
+            <div class="w-full flex justify-center items-center">
+              <svg
+                role="img"
+                viewBox="0 0 24 24"
+                class="w-1/3 opacity-60 group-hover:scale-110 group-hover:opacity-100 group-hover:drop-shadow-[0_4px_10px_rgba(255,167,38,0.2)] origin-center transition duration-500 ease-in-out"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>tldraw</title>
+                <path
+                  d="M21.474 0H2.526C1.131 0 0 1.18 0 2.637v18.726C0 22.819 1.131 24 2.526 24h18.948C22.869 24 24 22.82 24 21.363V2.637C24 1.181 22.869 0 21.474 0zm-11.01 5.388c.397-.405.888-.607 1.474-.607.57 0 1.052.202 1.448.607.397.404.595.896.595 1.476s-.198 1.072-.595 1.476c-.396.405-.879.607-1.448.607-.586 0-1.077-.202-1.474-.607-.396-.404-.594-.896-.594-1.476s.198-1.072.594-1.476zm3.13 11.49a4.887 4.887 0 0 1-2.018 2.136c-.483.281-.879.273-1.19-.026-.292-.281-.206-.615.26-1.002.258-.193.473-.44.646-.738.172-.299.284-.607.336-.923.017-.14-.043-.21-.181-.21-.345-.018-.698-.212-1.06-.581-.362-.37-.543-.826-.543-1.37 0-.58.198-1.073.594-1.477a2.024 2.024 0 0 1 1.5-.633c.552 0 1.034.21 1.448.633.414.404.655.86.724 1.37.138.95-.034 1.89-.517 2.822z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-orange-400 font-bold">Web Development</h3>
+            <p class="text-slate-600 text-center md:text-sm lg:text-xs">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum,
+              quam.
+            </p>
+          </div>
+          <div
+            class="bg-blue-950 p-5 box-border rounded-lg flex flex-wrap justify-center items-center gap-3 shadow-lg shadow-orange-400/50 group"
+          >
+            <div class="w-full flex justify-center items-center">
+              <svg
+                role="img"
+                viewBox="0 0 24 24"
+                class="w-1/3 opacity-60 group-hover:scale-110 group-hover:opacity-100 group-hover:drop-shadow-[0_4px_10px_rgba(255,167,38,0.2)] origin-center transition duration-500 ease-in-out"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Apache Cassandra</title>
+                <path
+                  d="M10.374 10.53a3.102 3.102 0 0 1-.428-.222l.555.143c0 .02-.01.036-.01.055l-.117.025zm-.283 1.506-.315.253.852-1.079-1.078.391c.002.017.009.033.009.05a.57.57 0 0 1-.184.42c.102.217.228.424.375.616a3.2 3.2 0 0 1 .34-.651zm.717-2.347-.652-.82a.427.427 0 0 1-.506.162c-.054.073-.083.162-.13.24l1.258.463c.011-.015.019-.031.03-.045zm-1.666.444c-.07.314-.087.637-.05.956a.566.566 0 0 1 .451.475l.946-.606c-.067-.022-.126-.06-.191-.088l-1.119-.08.64-.14a3.186 3.186 0 0 1-.668-.554l-.01.037zM20.1 11.648c-.164.202.833 1.022.833 1.022s-1.654-1.022-2.234-.72c-.278.144.574.811 1.175 1.242-.428-.274-.982-.571-1.175-.408-.328.277 1.565 2.549 1.565 2.549s-2.145-2.322-2.36-2.209c-.214.114.593 1.224.593 1.224s-1.06-1.16-1.35-.959c-.29.202 1.514 3.218 1.514 3.218s-1.956-3.091-2.763-2.574c1.268 2.782.795 3.18.795 3.18s-.162-2.839-1.742-2.764c-.795.038.379 2.12.379 2.12s-1.08-1.902-1.8-1.864c1.326 2.51.854 3.53.854 3.53s.219-2.143-1.58-3.336c.682.606-.427 3.336-.427 3.336s.976-4.023-.719-3.256c-.268.121-.019 2.007-.019 2.007s-.34-2.158-.851-2.045c-.298.066-1.893 2.99-1.893 2.99s1.306-3.16.908-3.027c-.29.096-.833 1.4-.833 1.4s.265-1.287 0-1.363c-.264-.075-1.74 1.363-1.74 1.363s1.097-1.287.908-1.552c-.287-.402-.623-.42-1.022-.265-.581.226-1.363 1.287-1.363 1.287s.78-1.074.643-1.476c-.219-.647-2.46 1.249-2.46 1.249s1.325-1.25 1.022-1.514c-.303-.265-1.947-.183-2.46-.185-1.515-.004-2.039-.36-2.498-.724 1.987.997 3.803-.151 6.094.494l.21.06c-1.3-.558-2.144-1.378-2.226-2.354-.036-.416.074-.827.297-1.222.619-.4 1.29-.773 2.06-1.095a4 4 0 0 0-.064.698c0 2.44 2.203 4.417 4.92 4.417s4.92-1.977 4.92-4.417c0-.45-.083-.881-.223-1.29 1.431.404 2.45.968 3.132 1.335.022.092.045.184.053.279.024.274-.018.547-.11.814.095-.147.198-.288.28-.445.367-.997 1.855.227 1.855.227s-1.085-.454-1.06-.24c.026.215 1.628.96 1.628.96s-1.45-.455-1.362-.114c.088.34 1.817 1.703 1.817 1.703s-1.956-1.489-2.12-1.287zm-7.268 2.65.042-.008-.06.01zM9.256 9.753c.12.13.26.234.396.343l.927-.029-1.064-.788c-.093.154-.195.303-.26.474Zm10.62 3.44c.3.215.54.373.54.373s-.24-.181-.54-.374zM7.507 8.617c-.14.229-.214.492-.215.76a3.99 3.99 0 0 0 2.358 3.64c0-.005.002-.01.003-.014a3.19 3.19 0 0 1-.58-.788c-.648.099-.926-.794-.336-1.08a3.174 3.174 0 0 1 .138-1.388 3.162 3.162 0 0 1-.52-1.36c-.296.07-.579.147-.848.23Zm1.488.82c.108-.24.243-.46.402-.661a.435.435 0 0 1 .568-.557c.077-.059.166-.099.248-.15a16.17 16.17 0 0 0-1.727.284c.114.388.272.76.509 1.084Zm2.285 3.928c1.4 0 2.633-.723 3.344-1.816a3.399 3.399 0 0 0-1.265-.539l-.297-.023.916.9-1.197-.467.704 1.078-1.074-.832-.012.006.347 1.278-.596-1.134-.098 1.33-.401-1.326-.472 1.261.114-1.359c-.006-.002-.01-.006-.015-.008l-.814 1.154.286-1.067c-.34.322-.605.713-.781 1.146.095.102.197.198.303.29.322.083.66.128 1.008.128zm10.145-4.434c.971-.567 1.716-1.955 1.716-1.955s-1.893 1.955-3.205 1.665c1.186-.934 1.766-2.549 1.766-2.549s-1.506 2.325-2.448 2.423c1.086-.959 1.54-2.322 1.54-2.322s-1.237 1.817-2.196 1.944c1.287-1.161 1.338-1.893 1.338-1.893s-1.781 2.302-2.499 1.943c.858-.934 1.439-2.12 1.439-2.12s-1.489 2.019-1.893 1.69c-.277-.05.454-.958.454-.958s-.908.807-1.16.606c.454-.278 1.236-1.64 1.236-1.64S16 7.505 15.621 7.304l.731-1.483s-.73 1.483-1.715 1.23c.454-.58.63-1.112.63-1.112s-.756 1.213-1.69.885c-.22-.077.273-.635.273-.635s-.626.61-1.055.534c-.43-.076.025-.858.025-.858s-.757 1.186-.908 1.136c-.152-.05.075-.833.075-.833s-.555.908-.858.858c-.302-.05 0-.934 0-.934s-.328.984-.58.909c-.252-.076-.303-.656-.303-.656s-.068.788-.429.858c-2.725.53-5.728 1.69-9.489 5.45C3.887 10.738 5.3 7.91 11.962 7.659c5.044-.191 7.399 2.137 8.177 2.17C22.51 9.93 24 7.633 24 7.633s-1.489 1.716-2.574 1.3zm-7.74.872-.608.464v.001l.054.003a3.35 3.35 0 0 0 .554-.468zm1.583-.426c0-.536-.237-.929-.594-1.217a3.178 3.178 0 0 1-.165.825.393.393 0 0 1-.328.681c-.154.233-.34.445-.549.63l.661.034-.995.237c-.025.018-.045.041-.07.058a3.194 3.194 0 0 1 1.536.691c.32-.574.504-1.235.504-1.94zM10.99 7.996a3.5 3.5 0 0 0-.785.46.427.427 0 0 1-.013.357l.885.643.023-.016-.36-1.262.627 1.12c.018-.006.04-.006.058-.011l-.02-1.251.398 1.163.477-1.15.016 1.268c.004.001.007.005.012.007l.713-1.005-.363 1.218.009.01 1.04-.69-.759 1.05.002.005.95-.34c.012-.016.028-.029.041-.045a.395.395 0 0 1 .394-.632 3.43 3.43 0 0 0 .27-.784 13.99 13.99 0 0 0-2.798-.168c-.286.011-.55.033-.817.053Z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-orange-400 font-bold">Design Graphic</h3>
+            <p class="text-slate-600 text-center md:text-sm lg:text-xs">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
+              ratione velit ullam atque?
+            </p>
+          </div>
+          <div
+            class="bg-blue-950 p-5 box-border rounded-lg flex flex-wrap justify-center items-center gap-3 shadow-lg shadow-orange-400/50 group"
+          >
+            <div class="w-full flex justify-center items-center">
+              <svg
+                role="img"
+                class="w-1/3 opacity-60 group-hover:scale-110 group-hover:opacity-100 group-hover:drop-shadow-[0_4px_10px_rgba(255,167,38,0.2)] origin-center transition duration-500 ease-in-out"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Immersive Translate</title>
+                <path
+                  d="M8.607 4.008h-1.75v1.749H3.539v5.85h3.318v2.534h1.75v-2.533h3.317V5.757H8.607Zm-1.75 3.498H5.289V9.86h1.568Zm1.75 2.353V7.506h1.568V9.86Zm12.065 10.133-3.68-9.229h-1.75l-3.68 9.23h1.87l.954-2.474h3.462l.954 2.473zm-3.499-4.222-1.056-2.738-1.056 2.738zm-9.471 4.222h2.594v-1.749H7.702a1.57 1.57 0 0 1-1.569-1.568v-1.75h-1.75v1.75a3.32 3.32 0 0 0 3.319 3.317m5.851-15.14v1.75h2.594c.867 0 1.569.702 1.569 1.568v1.81h1.75V8.17a3.32 3.32 0 0 0-3.319-3.318zM0 3.75A3.75 3.75 0 0 1 3.75 0h16.5A3.75 3.75 0 0 1 24 3.75v16.5A3.75 3.75 0 0 1 20.25 24H3.75A3.75 3.75 0 0 1 0 20.25Z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-orange-400 font-bold">
+              Translator Indonesia-English-Japanese
+            </h3>
+            <p class="text-slate-600 text-center md:text-sm lg:text-xs">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Repudiandae beatae ipsam, voluptatibus recusandae earum
+              asperiores?
+            </p>
+          </div>
+          <div
+            class="bg-blue-950 p-5 box-border rounded-lg flex flex-wrap justify-center items-center gap-3 shadow-lg shadow-orange-400/50 group"
+          >
+            <div class="w-full flex justify-center items-center">
+              <svg
+                role="img"
+                class="w-1/3 opacity-60 group-hover:scale-110 group-hover:opacity-100 group-hover:drop-shadow-[0_4px_10px_rgba(255,167,38,0.2)] origin-center transition duration-500 ease-in-out"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Write.as</title>
+                <path
+                  d="M12.812 5.139l2.179 7.509a168.085 168.085 0 01.666 2.459h.025c.054-.372.145-.772.273-1.204l.353-1.176 1.05-3.442.213-.671c.062-.199.126-.382.192-.551.068-.167.131-.327.194-.478.062-.151.132-.301.213-.451v-.028l-1.569.105V5.139h5.169V6.88c-.364 0-.682.119-.956.358a3.608 3.608 0 00-.711.85 6.325 6.325 0 00-.493.984 22.78 22.78 0 00-.286.758l-3.096 8.997h-2.884L11.47 13.02c-.053-.142-.12-.345-.199-.606a46.941 46.941 0 01-.247-.85c-.083-.307-.173-.623-.265-.95-.092-.328-.179-.638-.259-.931h-.026c-.053.381-.14.809-.26 1.283-.119.474-.243.937-.372 1.388-.128.451-.248.859-.358 1.223-.111.364-.194.62-.246.771l-1.501 4.479h-2.7L1.742 9.392a27.83 27.83 0 01-.472-1.39 3.995 3.995 0 01-.113-.418l-.094-.425L0 7.212V5.139h6.526V6.88c-.382.027-.65.141-.806.345-.155.204-.231.466-.231.784-.009.151.001.311.032.478a4.9 4.9 0 00.128.519l.916 3.322c.107.399.21.818.312 1.256.101.438.184.884.247 1.336h.026l.134-.598a39.977 39.977 0 01.331-1.429c.072-.278.155-.587.254-.922l1.993-6.832h2.95zM24 16.628a2.232 2.232 0 11-4.464 0 2.232 2.232 0 114.464 0"
+                />
+              </svg>
+            </div>
+            <h3 class="text-orange-400 font-bold">Article Writer</h3>
+            <p class="text-slate-600 text-center md:text-sm lg:text-xs">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Consectetur beatae impedit cupiditate!
+            </p>
+          </div>
+          <div
+            class="bg-blue-950 p-5 box-border rounded-lg flex flex-wrap justify-center items-center gap-3 shadow-lg shadow-orange-400/50 group"
+          >
+            <div class="w-full flex justify-center items-center">
+              <svg
+                role="img"
+                class="w-1/3 opacity-60 group-hover:scale-110 group-hover:opacity-100 group-hover:drop-shadow-[0_4px_10px_rgba(255,167,38,0.2)] origin-center transition duration-500 ease-in-out"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Depositphotos</title>
+                <path
+                  d="M12 24c5.119 0 9.061-3.942 9.061-9.06S17.119 5.88 12 5.88c-5.117 0-9.059 3.942-9.059 9.06S6.883 24 12 24Zm0-5.598c-1.954 0-3.461-1.508-3.461-3.462 0-1.955 1.507-3.462 3.461-3.462 1.955 0 3.462 1.507 3.462 3.462 0 1.954-1.507 3.462-3.462 3.462Zm2.634-12.241h6.161V0h-6.161v6.161Z"
+                />
+              </svg>
+            </div>
+            <h3 class="text-orange-400 font-bold">Photography</h3>
+            <p class="text-slate-600 text-center md:text-sm lg:text-xs">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum,
+              nam?
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- service section end -->
+
+    <!-- about section start -->
+    <section>
+      <div
+        id="about"
+        class="w-full px-4 mt-20 grid grid-cols-1 gap-20 scroll-mt-20"
+      >
+        <!-- about me start -->
+        <div class="w-full">
+          <h2 class="text-lg font-bold mb-5 text-center text-orange-400">
+            More About Me
+          </h2>
+          <p class="text-slate-600 text-center text-sm lg:text-base">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa
+            laborum excepturi doloribus suscipit minima dolorem libero facilis
+            fugiat quisquam! Omnis autem sequi ducimus enim unde illum quidem
+            obcaecati ullam, neque sint eveniet debitis eaque suscipit
+            praesentium dolorum. Aut, et nesciunt?
+          </p>
+        </div>
+        <!-- about me end -->
+        <div class="grid md:grid-cols-2 gap-20">
+          <!-- languages start -->
+          <div class="w-full">
+            <h2 class="text-orange-400 text-lg font-bold mb-5 text-center">
+              Languages
+            </h2>
+            <div class="flex flex-wrap gap-4">
+              <div class="flex flex-wrap w-full">
+                <div class="flex justify-between text-white w-full">
+                  <h3 class="text-xs text-slate-600">INDONESIA</h3>
+                  <h3 class="font-semibold">90%</h3>
+                </div>
+                <div class="rounded-full w-full bg-blue-950 h-1">
+                  <div
+                    class="rounded-full bg-gradient-to-r from-[#ff00d4] to-[#ff3c00] w-[90%] h-full"
+                  ></div>
+                </div>
+              </div>
+              <div class="flex flex-wrap w-full">
+                <div class="flex justify-between text-white w-full">
+                  <h3 class="text-xs text-slate-600">ENGLISH</h3>
+                  <h3 class="font-semibold">75%</h3>
+                </div>
+                <div class="rounded-full w-full bg-blue-950 h-1">
+                  <div
+                    class="rounded-full bg-gradient-to-r from-[#ff00d4] to-[#ff3c00] w-[75%] h-full"
+                  ></div>
+                </div>
+              </div>
+              <div class="flex flex-wrap w-full">
+                <div class="flex justify-between text-white w-full">
+                  <h3 class="text-xs text-slate-600">JAPANESE</h3>
+                  <h3 class="font-semibold">65%</h3>
+                </div>
+                <div class="rounded-full w-full bg-blue-950 h-1">
+                  <div
+                    class="rounded-full bg-gradient-to-r from-[#ff00d4] to-[#ff3c00] w-[65%] h-full"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- languages end -->
+          <!-- my skills start -->
+          <div class="w-full">
+            <h2 class="text-orange-400 text-lg font-bold mb-5 text-center">
+              My Skills
+            </h2>
+            <div class="flex flex-wrap gap-4">
+              <div class="flex flex-wrap w-full">
+                <div class="flex justify-between text-white w-full">
+                  <h3 class="text-xs text-slate-600">HTML</h3>
+                  <h3 class="font-semibold">80%</h3>
+                </div>
+                <div class="rounded-full w-full bg-blue-950 h-1">
+                  <div
+                    class="rounded-full bg-gradient-to-r from-[#ff00d4] to-[#ff3c00] w-[80%] h-full"
+                  ></div>
+                </div>
+              </div>
+              <div class="flex flex-wrap w-full">
+                <div class="flex justify-between text-white w-full">
+                  <h3 class="text-xs text-slate-600">TAILWIND CSS</h3>
+                  <h3 class="font-semibold">75%</h3>
+                </div>
+                <div class="rounded-full w-full bg-blue-950 h-1">
+                  <div
+                    class="rounded-full bg-gradient-to-r from-[#ff00d4] to-[#ff3c00] w-[75%] h-full"
+                  ></div>
+                </div>
+              </div>
+              <div class="flex flex-wrap w-full">
+                <div class="flex justify-between text-white w-full">
+                  <h3 class="text-xs text-slate-600">JAVA SCRIPT</h3>
+                  <h3 class="font-semibold">50%</h3>
+                </div>
+                <div class="rounded-full w-full bg-blue-950 h-1">
+                  <div
+                    class="rounded-full bg-gradient-to-r from-[#ff00d4] to-[#ff3c00] w-[50%] h-full"
+                  ></div>
+                </div>
+              </div>
+              <div class="flex flex-wrap w-full">
+                <div class="flex justify-between text-white w-full">
+                  <h3 class="text-xs text-slate-600">PHOTOSHOP</h3>
+                  <h3 class="font-semibold">70%</h3>
+                </div>
+                <div class="rounded-full w-full bg-blue-950 h-1">
+                  <div
+                    class="rounded-full bg-gradient-to-r from-[#ff00d4] to-[#ff3c00] w-[70%] h-full"
+                  ></div>
+                </div>
+              </div>
+              <div class="flex flex-wrap w-full">
+                <div class="flex justify-between text-white w-full">
+                  <h3 class="text-xs text-slate-600">ILLUSTRATOR</h3>
+                  <h3 class="font-semibold">50%</h3>
+                </div>
+                <div class="rounded-full w-full bg-blue-950 h-1">
+                  <div
+                    class="rounded-full bg-gradient-to-r from-[#ff00d4] to-[#ff3c00] w-[50%] h-full"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- my skills end -->
+        </div>
+      </div>
+    </section>
+    <!-- about section end -->
+
+    <!-- project section start -->
+    <section>
+      <div id="project" class="w-full px-4 mt-20 scroll-mt-20">
+        <h2 class="text-lg font-bold mb-5 text-white">Lastest Project</h2>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 px-4"
+        >
+          <div
+            class="flex flex-col h-full bg-blue-950 rounded-lg shadow-lg shadow-orange-400/50 group overflow-hidden"
+          >
+            <div class="w-full h-50 overflow-hidden">
+              <div
+                style="background-image: url('img/book-cover-design.jpg')"
+                class="w-full h-full bg-cover bg-center rounded-t-lg group-hover:scale-110 transition duration-300 ease-in-out"
+              ></div>
+            </div>
+            <div class="p-4 flex-1 flex flex-col justify-start text-left">
+              <h3 class="text-lg text-orange-400 font-semibold">
+                Book Cover Design
+              </h3>
+              <p
+                class="text-sm text-slate-600 mt-2 leading-relaxed md:text-sm lg:text-xs"
+              >
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel
+                impedit ipsum dolorum dignissimos est culpa deserunt, distinctio
+                iusto nemo explicabo debitis dicta inventore numquam quae?
+              </p>
+            </div>
+          </div>
+          <div
+            class="flex flex-col h-full bg-blue-950 rounded-lg shadow-lg shadow-orange-400/50 group overflow-hidden"
+          >
+            <div class="w-full h-50 overflow-hidden">
+              <div
+                style="
+                  background-image: url('img/marketplace-design-and-develop.jpg');
+                "
+                class="w-full h-full bg-cover bg-top rounded-t-lg group-hover:scale-110 transition duration-300 ease-in-out"
+              ></div>
+            </div>
+            <div class="p-4 flex-1 flex flex-col justify-start text-left">
+              <h3 class="text-lg text-orange-400 font-semibold">
+                Marketplace Design and Development
+              </h3>
+              <p
+                class="text-sm text-slate-600 mt-2 leading-relaxed md:text-sm lg:text-xs"
+              >
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Incidunt culpa enim, magnam iste voluptates sed quaerat dolores
+                totam nihil distinctio perspiciatis rem maxime, omnis laudantium
+                ullam saepe deserunt vero quibusdam odio aut animi praesentium
+                obcaecati quod? Dicta voluptatum omnis vel?
+              </p>
+            </div>
+          </div>
+          <div
+            class="flex flex-col h-full bg-blue-950 rounded-lg shadow-lg shadow-orange-400/50 group overflow-hidden"
+          >
+            <div class="w-full h-50 overflow-hidden">
+              <div
+                style="
+                  background-image: url('img/market-management-design.jpg');
+                "
+                class="w-full h-full bg-cover bg-top rounded-t-lg group-hover:scale-110 transition duration-300 ease-in-out"
+              ></div>
+            </div>
+            <div class="p-4 flex-1 flex flex-col justify-start text-left">
+              <h3 class="text-lg text-orange-400 font-semibold">
+                Market Management Design
+              </h3>
+              <p
+                class="text-sm text-slate-600 mt-2 leading-relaxed md:text-sm lg:text-xs"
+              >
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est
+                quia corporis praesentium quo eius, rem velit rerum, minima
+                pariatur quos, quisquam reiciendis nostrum temporibus. Sint sunt
+                alias reiciendis iusto ea?
+              </p>
+            </div>
+          </div>
+          <div
+            class="flex flex-col h-full bg-blue-950 rounded-lg shadow-lg shadow-orange-400/50 group overflow-hidden"
+          >
+            <div class="w-full h-50 overflow-hidden">
+              <div
+                style="background-image: url('img/vector-design.jpg')"
+                class="w-full h-full bg-cover bg-center rounded-t-lg group-hover:scale-110 transition duration-300 ease-in-out"
+              ></div>
+            </div>
+            <div class="p-4 flex-1 flex flex-col justify-start text-left">
+              <h3 class="text-lg text-orange-400 font-semibold">
+                Vector Design
+              </h3>
+              <p
+                class="text-sm text-slate-600 mt-2 leading-relaxed md:text-sm lg:text-xs"
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                vero necessitatibus in tempora delectus nostrum quidem dolor
+                distinctio rem unde inventore, nihil numquam eos enim?
+              </p>
+            </div>
+          </div>
+          <div
+            class="flex flex-col h-full bg-blue-950 rounded-lg shadow-lg shadow-orange-400/50 group overflow-hidden"
+          >
+            <div class="w-full h-50 overflow-hidden">
+              <div
+                style="background-image: url('img/photografy.jpg')"
+                class="w-full h-full bg-cover bg-center rounded-t-lg group-hover:scale-110 transition duration-300 ease-in-out"
+              ></div>
+            </div>
+            <div class="p-4 flex-1 flex flex-col justify-start text-left">
+              <h3 class="text-lg text-orange-400 font-semibold">
+                Nature Fotografi
+              </h3>
+              <p
+                class="text-sm text-slate-600 mt-2 leading-relaxed md:text-sm lg:text-xs"
+              >
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum,
+                repellat ipsa magnam odit vel placeat.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- project section end -->
+
+    <!-- contact section start -->
+    <section>
+      <div id="contact" class="w-full px-4 mt-20 scroll-mt-20">
+        <div class="w-full">
+          <h2 class="text-xl lg:text-2xl font-bold mb-5 text-white text-center">
+            Contact Me
+          </h2>
+          <div
+            class="w-full mt-10 flex gap-8 md:gap-10 justify-center items-center"
+          >
+            <a
+              href="#"
+              class="wa hover:scale-125 hover:-translate-y-2 transition duration-300 ease-in-out group"
+            >
+              <svg
+                role="img"
+                viewBox="0 0 24 24"
+                class="w-10 text-white group-hover:drop-shadow-[0_10px_8px_rgba(255,165,0,0.8)] transition duration-300 ease-in-out"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>WhatsApp</title>
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+            <a
+              href="#"
+              class="ig hover:scale-125 hover:-translate-y-2 transition duration-300 ease-in-out group"
+            >
+              <svg
+                role="img"
+                viewBox="0 0 24 24"
+                class="w-10 text-white group-hover:drop-shadow-[0_10px_8px_rgba(255,165,0,0.8)] transition duration-300 ease-in-out"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Instagram</title>
+                <path
+                  d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+            <a
+              href="#"
+              class="mail hover:scale-125 hover:-translate-y-2 transition duration-300 ease-in-out group"
+            >
+              <svg
+                role="img"
+                viewBox="0 0 24 24"
+                class="w-10 text-white group-hover:drop-shadow-[0_10px_8px_rgba(255,165,0,0.8)] transition duration-300 ease-in-out"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Gmail</title>
+                <path
+                  d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+            <a
+              href="#"
+              class="x hover:scale-125 hover:-translate-y-2 transition duration-300 ease-in-out group"
+            >
+              <svg
+                role="img"
+                viewBox="0 0 24 24"
+                class="w-10 text-white group-hover:drop-shadow-[0_10px_8px_rgba(255,165,0,0.8)] transition duration-300 ease-in-out"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>X</title>
+                <path
+                  d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- contact section end -->
+
+    <!-- footer section start -->
+    <footer>
+      <div class="w-full mt-20 relative">
+        <div
+          class="grid grid-cols-3 items-center absolute bottom-0 left-0 w-full h-10 bg-blue-950 px-4"
+        >
+          <span class="text-lg font-bold text-gradient">Logo</span>
+          <span class="text-slate-600 text-xs text-center"
+            >CopyRight by Baim</span
+          >
+        </div>
+      </div>
+    </footer>
+    <!-- footer section end -->
+    <script src="script.js"></script>
+  </body>
+</html>
