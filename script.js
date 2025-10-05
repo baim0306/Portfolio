@@ -1,3 +1,4 @@
+// hamburger-menu
 const hamburger = document.getElementById("hamburger");
 const menu = document.getElementById("menu");
 
@@ -6,6 +7,18 @@ hamburger.addEventListener("click", function () {
     menu.classList.toggle("navbar-inactive");
     menu.classList.toggle("navbar-active");
     hamburger.classList.toggle("hamburger-active");
+  }
+});
+
+document.body.addEventListener("click", function (e) {
+  if (
+    !e.target.closest("#menu") &&
+    !e.target.closest("#hamburger") &&
+    window.innerWidth < 768
+  ) {
+    menu.classList.remove("navbar-active");
+    menu.classList.add("navbar-inactive");
+    hamburger.classList.remove("hamburger-active");
   }
 });
 
@@ -48,3 +61,46 @@ document.addEventListener("mousemove", function (e) {
 
 // Title change
 const title = document.querySelector("#header div h2");
+const subTitles = document.querySelectorAll("section div h2");
+let pendingTimeout = null;
+
+function updateTitleOnScroll() {
+  if (pendingTimeout) {
+    clearTimeout(pendingTimeout);
+    pendingTimeout = null;
+  }
+
+  if (window.scrollY === 0) {
+    title.classList.add("animate");
+    setTimeout(() => {
+      title.innerHTML = "Home";
+      pendingTimeout = null;
+    }, 300);
+    return;
+  }
+
+  let current = "";
+
+  subTitles.forEach((subTitle) => {
+    const top = subTitle.getBoundingClientRect().top;
+
+    if (top < window.innerHeight / 2) {
+      current = subTitle.innerHTML;
+    }
+  });
+
+  if (current && title.innerHTML !== current) {
+    title.classList.add("animate");
+    setTimeout(() => {
+      title.innerHTML = current;
+      pendingTimeout = null;
+    }, 300);
+
+    setTimeout(() => {
+      title.classList.remove("animate");
+    }, 300);
+  }
+}
+
+window.addEventListener("scroll", updateTitleOnScroll);
+window.addEventListener("load", upsateTitleOnScroll);
