@@ -1,4 +1,3 @@
-
 # Portfolio Baim
 
 Selamat datang di portfolio saya! 🌟
@@ -32,4 +31,4 @@ Saya baru menambahkan project terbaru saya di portfolio ini. Silakan cek di hala
 
 # Link Portfolio
 
-Klik di sini untuk melihat portfolio saya
+[Klik di sini untuk melihat portfolio saya](https://baim0306.github.io/Portfolio/)
