@@ -1,34 +1,25 @@
-# Portfolio Baim
+# Portfolio Baim v2 🚀
 
-Selamat datang di portfolio saya! 🌟
-Ini adalah proyek portfolio pribadi saya yang dibuat untuk menampilkan beberapa project saya sekaligus sebagai sarana belajar dan eksperimen dengan teknologi web modern.
+Selamat datang di **Portfolio Baim v2**! 🌟  
+Ini adalah versi terbaru dari portfolio pribadi saya yang dibuat untuk menampilkan project-project saya menggunakan stack modern: **Express.js** untuk backend, **MongoDB** sebagai database, dan **React** untuk frontend.
 
-# Teknologi yang Digunakan
+---
 
-HTML – Struktur dasar halaman web.
+## Teknologi yang Digunakan
 
-Tailwind CSS – Framework CSS untuk styling yang cepat dan responsif.
+- **Frontend:** React + Tailwind CSS
+- **Backend:** Express.js
+- **Database:** MongoDB
+- **Vercel:** Deployment frontend & backend
 
-JavaScript – Interaktivitas pada halaman web.
+---
 
-AOS (Animate On Scroll) – Animasi saat scrolling untuk pengalaman pengguna yang lebih menarik.
+## Fitur
 
-Boxicons (CDN) – Ikon-ikon yang mudah digunakan melalui CDN.
+- Menampilkan project terbaru saya dari database MongoDB.
+- Layout responsif dengan Tailwind CSS.
+- Backend API untuk fetching data portfolio secara dinamis.
 
-# Fitur
+---
 
-Menampilkan project-project terbaru saya.
-
-Animasi menarik saat halaman digulir menggunakan AOS.
-
-Ikon-ikon modern menggunakan Boxicons.
-
-Layout responsif dengan Tailwind CSS.
-
-# Project Baru
-
-Saya baru menambahkan project terbaru saya di portfolio ini. Silakan cek di halaman Projects di portfolio untuk melihat detailnya.
-
-# Link Portfolio
-
-[Klik di sini untuk melihat portfolio saya](https://baim0306.github.io/Portfolio/)
+## Link
