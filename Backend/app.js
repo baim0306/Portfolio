@@ -14,7 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // permintaan file frontend ke folder dist
-app.use(express.static(path.join(__dirname, "frontend", "dist")));
+const frontendPath = path.join(process.cwd(), "frontend", "dist");
+app.use(express.static(frontendPath));
 
 // importing User model
 const User = require("./models/UserModel");
@@ -55,7 +56,7 @@ app.get("/api/v2/portfolio/baim", async (req, res) => {
 
 // react router ke folder dist file index
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
 
 // app.listen(PORT, () => {
