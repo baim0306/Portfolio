@@ -13,6 +13,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// permintaan file frontend ke folder dist
+app.use(express.static(path.join(__dirname, "frontend", "dist")));
+
 // importing User model
 const User = require("./models/UserModel");
 const {
@@ -48,6 +51,11 @@ app.get("/api/v2/portfolio/baim", async (req, res) => {
     console.error(err);
     res.status(500).send(err.message);
   }
+});
+
+// react router ke folder dist file index
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
 // app.listen(PORT, () => {
