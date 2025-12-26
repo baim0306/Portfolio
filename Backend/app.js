@@ -50,6 +50,9 @@ app.get("/api/v2/portfolio/baim", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+// ekspor object app untu vercel
+module.exports = app;
