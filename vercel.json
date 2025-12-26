@@ -17,12 +17,8 @@
       "dest": "app.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "/frontend/dist/$1",
-      "continue": true
-    },
-    {
-      "handle": "filesystem"
+      "src": "/assets/(.*)",
+      "dest": "/frontend/dist/assets/$1"
     },
     {
       "src": "/(.*)",
