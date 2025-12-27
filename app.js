@@ -15,8 +15,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // permintaan file frontend ke folder dist
-const frontendPath = path.join(__dirname, "frontend", "dist");
-console.log("Mencari frontend di path:", frontendPath);
+const possiblePaths = [
+  path.join(__dirname, "frontend", "dist"),
+  path.join(__dirname, "dist"),
+  path.join(process.cwd(), "frontend", "dist"),
+  path.join(process.cwd(), "dist"),
+];
+
+let frontendPath = possiblePaths[0]; // Default
+
+for (const p of possiblePaths) {
+  if (require("fs").existsSync(p)) {
+    frontendPath = p;
+    console.log("Ditemukan folder frontend di:", p);
+    break;
+  }
+}
+
 app.use(express.static(frontendPath));
 
 // importing User model
@@ -61,11 +76,11 @@ app.get("*", (req, res) => {
   const indexPath = path.join(frontendPath, "index.html");
   res.sendFile(indexPath, (err) => {
     if (err) {
-      console.error("FRONTEND NOT FOUND AT:", indexPath);
+      console.error("Gagal mengirim index.html dari:", indexPath);
       res.status(404).send(`
-        <h1>Frontend Build Tidak Ditemukan</h1>
+        <h1>Frontend Tidak Ditemukan</h1>
         <p>Server mencari di: <code>${indexPath}</code></p>
-        <p>Pastikan folder 'frontend/dist' sudah tercipta setelah build.</p>
+        <p>Coba ganti Output Directory di Vercel menjadi <code>dist</code> saja jika <code>frontend/dist</code> gagal.</p>
       `);
     }
   });
