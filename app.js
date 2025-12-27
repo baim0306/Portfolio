@@ -1,11 +1,8 @@
-// Goblok Banget
-
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
-const fs = require("fs");
 
 // Url imports
 const MongoURI = process.env.URI;
@@ -18,25 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // permintaan file frontend ke folder dist
-const possiblePaths = [
-  path.join(process.cwd(), "dist"),
-  path.join(__dirname, "dist"),
-];
-
-let frontendPath = "";
-
-for (const p of possiblePaths) {
-  if (fs.existsSync(p)) {
-    frontendPath = p;
-    console.log("FOLDER DIST DITEMUKAN DI ROOT:", p);
-    break;
-  }
-}
-
-// Jika ketemu, gunakan sebagai static folder
-if (frontendPath) {
-  app.use(express.static(frontendPath));
-}
+const frontendPath = path.join(process.cwd(), "dist");
+app.use(express.static(frontendPath));
 
 // importing User model
 const User = require("./models/UserModel");
@@ -77,31 +57,14 @@ app.get("/api/v2/portfolio/baim", async (req, res) => {
 
 // react router ke folder dist file index
 app.get("*", (req, res) => {
-  // Jika frontendPath kosong, langsung tembak ke pesan error
-  if (!frontendPath) {
-    return res.status(404).send(`
-      <div style="font-family: sans-serif; padding: 20px;">
-        <h1>🚨 Frontend Build Tidak Ditemukan</h1>
-        <p>Backend berjalan, tapi folder <b>dist</b> tidak ditemukan di root folder.</p>
-        <hr>
-        <p>Lokasi yang diperiksa:</p>
-        <ul>${possiblePaths
-          .map((p) => `<li><code>${p}</code></li>`)
-          .join("")}</ul>
-        <p>Pastikan folder <b>dist</b> sudah ada di root setelah proses build.</p>
-      </div>
-    `);
-  }
-
-  const indexPath = path.join(frontendPath, "index.html");
-  res.sendFile(indexPath, (err) => {
+  res.sendFile(path.join(frontendPath, "index.html"), (err) => {
     if (err) {
-      res.status(404).send(`
-        <div style="font-family: sans-serif; padding: 20px;">
-          <h1>❌ index.html Tidak Ada</h1>
-          <p>Folder ditemukan di <code>${frontendPath}</code>, tapi file <code>index.html</code> tidak ada di dalamnya.</p>
-        </div>
-      `);
+      // Jika index.html tidak ada, tampilkan pesan fallback
+      res
+        .status(404)
+        .send(
+          "Frontend build not found. Please ensure 'npm run build' completed successfully."
+        );
     }
   });
 });
