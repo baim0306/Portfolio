@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-const app = require("../app");
 
 // Url imports
 const MongoURI = process.env.URI;
@@ -16,9 +15,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // permintaan file frontend ke folder dist
-// const frontendPath = path.join(process.cwd(), "frontend", "dist");
-// console.log("Mencari frontend di path:", frontendPath);
-// app.use(express.static(frontendPath));
+const frontendPath = path.join(process.cwd(), "frontend", "dist");
+console.log("Mencari frontend di path:", frontendPath);
+app.use(express.static(frontendPath));
 
 // importing User model
 const User = require("./models/UserModel");
@@ -58,19 +57,19 @@ app.get("/api/v2/portfolio/baim", async (req, res) => {
 });
 
 // react router ke folder dist file index
-// app.get("*", (req, res) => {
-//   const indexPath = path.join(frontendPath, "index.html");
-//   res.sendFile(indexPath, (err) => {
-//     if (err) {
-//       console.error("FRONTEND NOT FOUND AT:", indexPath);
-//       res.status(404).send(`
-//         <h1>Frontend Build Tidak Ditemukan</h1>
-//         <p>Server mencari di: <code>${indexPath}</code></p>
-//         <p>Pastikan folder 'frontend/dist' sudah tercipta setelah build.</p>
-//       `);
-//     }
-//   });
-// });
+app.get("*", (req, res) => {
+  const indexPath = path.join(frontendPath, "index.html");
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error("FRONTEND NOT FOUND AT:", indexPath);
+      res.status(404).send(`
+        <h1>Frontend Build Tidak Ditemukan</h1>
+        <p>Server mencari di: <code>${indexPath}</code></p>
+        <p>Pastikan folder 'frontend/dist' sudah tercipta setelah build.</p>
+      `);
+    }
+  });
+});
 
 // app.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);
