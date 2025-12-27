@@ -9,22 +9,18 @@
       "src": "frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "frontend/dist"
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "app.js"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/frontend/dist/assets/$1"
+      "dest": "/app.js"
     },
     {
       "src": "/(.*)",
-      "dest": "app.js"
+      "dest": "/frontend/dist/index.html"
     }
   ]
 }

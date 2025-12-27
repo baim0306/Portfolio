@@ -8,9 +8,6 @@ import About from "./components/About/About";
 import Project from "./components/Project/Project";
 import Footer from "./components/Footer/Footer";
 
-const API = import.meta.env.VITE_API_URL;
-const BASE_URL = API || "http://localhost:5000";
-
 export default function App() {
   const [portfolioData, setPortfolioData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +17,7 @@ export default function App() {
   const aboutRef = useRef(null);
   const projectRef = useRef(null);
 
-  const API_URL = `${BASE_URL}/api/v2/portfolio/baim`;
+  const API_URL = `${import.meta.env.VITE_API_URL || ""}/api/v2/portfolio/baim`;
 
   useEffect(() => {
     const fetchData = async () => {
