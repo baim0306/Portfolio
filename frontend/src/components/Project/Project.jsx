@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import InfoProject from "./InfoProject";
+import InfoProject from "./infoProject";
 import ListProject from "./ListProject";
 
 export default function Project({ portfolioData, projectRef }) {
