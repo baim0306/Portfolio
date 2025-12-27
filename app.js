@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // permintaan file frontend ke folder dist
-const frontendPath = path.join(process.cwd(), "frontend", "dist");
+const frontendPath = path.join(__dirname, "frontend", "dist");
 console.log("Mencari frontend di path:", frontendPath);
 app.use(express.static(frontendPath));
 
