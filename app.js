@@ -16,23 +16,24 @@ app.use(express.urlencoded({ extended: true }));
 
 // permintaan file frontend ke folder dist
 const possiblePaths = [
-  path.join(__dirname, "frontend", "dist"),
-  path.join(__dirname, "dist"),
-  path.join(process.cwd(), "frontend", "dist"),
   path.join(process.cwd(), "dist"),
+  path.join(__dirname, "dist"),
 ];
 
-let frontendPath = possiblePaths[0]; // Default
+let frontendPath = "";
 
 for (const p of possiblePaths) {
-  if (require("fs").existsSync(p)) {
+  if (fs.existsSync(p)) {
     frontendPath = p;
-    console.log("Ditemukan folder frontend di:", p);
+    console.log("FOLDER DIST DITEMUKAN DI ROOT:", p);
     break;
   }
 }
 
-app.use(express.static(frontendPath));
+// Jika ketemu, gunakan sebagai static folder
+if (frontendPath) {
+  app.use(express.static(frontendPath));
+}
 
 // importing User model
 const User = require("./models/UserModel");
@@ -73,14 +74,30 @@ app.get("/api/v2/portfolio/baim", async (req, res) => {
 
 // react router ke folder dist file index
 app.get("*", (req, res) => {
+  // Jika frontendPath kosong, langsung tembak ke pesan error
+  if (!frontendPath) {
+    return res.status(404).send(`
+      <div style="font-family: sans-serif; padding: 20px;">
+        <h1>🚨 Frontend Build Tidak Ditemukan</h1>
+        <p>Backend berjalan, tapi folder <b>dist</b> tidak ditemukan di root folder.</p>
+        <hr>
+        <p>Lokasi yang diperiksa:</p>
+        <ul>${possiblePaths
+          .map((p) => `<li><code>${p}</code></li>`)
+          .join("")}</ul>
+        <p>Pastikan folder <b>dist</b> sudah ada di root setelah proses build.</p>
+      </div>
+    `);
+  }
+
   const indexPath = path.join(frontendPath, "index.html");
   res.sendFile(indexPath, (err) => {
     if (err) {
-      console.error("Gagal mengirim index.html dari:", indexPath);
       res.status(404).send(`
-        <h1>Frontend Tidak Ditemukan</h1>
-        <p>Server mencari di: <code>${indexPath}</code></p>
-        <p>Coba ganti Output Directory di Vercel menjadi <code>dist</code> saja jika <code>frontend/dist</code> gagal.</p>
+        <div style="font-family: sans-serif; padding: 20px;">
+          <h1>❌ index.html Tidak Ada</h1>
+          <p>Folder ditemukan di <code>${frontendPath}</code>, tapi file <code>index.html</code> tidak ada di dalamnya.</p>
+        </div>
       `);
     }
   });
