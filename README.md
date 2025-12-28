@@ -23,3 +23,5 @@ Ini adalah versi terbaru dari portfolio pribadi saya yang dibuat untuk menampilk
 ---
 
 ## Link
+
+https://baim-portfolio.vercel.app/
