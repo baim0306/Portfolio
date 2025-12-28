@@ -27,7 +27,9 @@ const {
 
 // mongoose connection
 mongoose
-  .connect(MongoURI)
+  .connect(MongoURI, {
+    serverSelectionTimeoutMS: 5000,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -42,6 +44,10 @@ app.get("/api/test", (req, res) => {
 //   Url untuk fetching di frontend
 app.get("/api/v2/portfolio/baim", async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      throw new Error("Database connection is not ready");
+    }
+
     const portfolioData = await User.findOne({ name: "Baim" })
       .populate("portfolio_project_list.project_ref_id")
       .lean();
