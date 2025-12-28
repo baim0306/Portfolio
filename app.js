@@ -26,16 +26,13 @@ const {
 } = require("./models/ProjectSchema");
 
 // mongoose connection
-mongoose
-  .connect(MongoURI, {
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+
+  return mongoose.connect(MongoURI, {
     serverSelectionTimeoutMS: 5000,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB:", err);
   });
+};
 
 app.get("/api/test", (req, res) => {
   res.send("API is working!");
@@ -44,9 +41,7 @@ app.get("/api/test", (req, res) => {
 //   Url untuk fetching di frontend
 app.get("/api/v2/portfolio/baim", async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      throw new Error("Database connection is not ready");
-    }
+    await connectDB();
 
     const portfolioData = await User.findOne({ name: "Baim" })
       .populate("portfolio_project_list.project_ref_id")
