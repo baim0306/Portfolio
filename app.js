@@ -8,9 +8,22 @@ const path = require("path");
 const MongoURI = process.env.URI;
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",");
+
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Maaf, Anda tidak diizinkan oleh aturan CORS!"));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -60,7 +73,6 @@ app.get("/api/v2/portfolio/baim", async (req, res) => {
 app.get("*", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"), (err) => {
     if (err) {
-      // Jika index.html tidak ada, tampilkan pesan fallback
       res
         .status(404)
         .send(
